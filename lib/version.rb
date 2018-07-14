@@ -5,7 +5,7 @@ module I18nTranslatedBackend
 
     # @return [Integer]
     def major
-      3
+      0
     end
 
     # @return [Integer]
