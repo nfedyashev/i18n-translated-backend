@@ -58,10 +58,10 @@ module I18nTranslatedBackend
         special_placeholder
       end
 
-      key = '********************************'
+      key = configuration.api_key
       host = 'https://api.cognitive.microsofttranslator.com'
       path = '/translate?api-version=3.0'
-      params = '&from=it&to=en'
+      params = "&from=#{configuration.from}&to=#{configuration.to}"
 
       uri = URI (host + path + params)
 
