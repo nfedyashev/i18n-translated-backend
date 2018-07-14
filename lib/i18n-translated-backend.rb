@@ -1,5 +1,4 @@
 # encoding: UTF-8
-require 'pry'
 require 'i18n'
 require 'net/https'
 require 'json'
