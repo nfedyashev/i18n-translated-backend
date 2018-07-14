@@ -20,6 +20,7 @@ module I18nTranslatedBackend
     # @example
     #   I18nTranslatedBackend.configure do |config|
     #     config.storage = I18nTranslatedBackend::Storage.new("en-it-translations.db")
+    #     config.display_as = ->(original, translated) { translated }
     #   end
     def configure
       yield(configuration)
@@ -40,11 +41,12 @@ module I18nTranslatedBackend
     # @return [String] translated message without affecting interpolation keys e.g. "%{count} thanks %{some_other_message}"
     def azure_translate_token(locale_token)
       if configuration.storage.contains?(locale_token)
-        configuration.storage.read(locale_token)
+        translated = configuration.storage.read(locale_token)
+        configuration.display_as.call locale_token, translated
       else
-        result = perform_http_request(locale_token)
-        configuration.storage.write locale_token, result
-        result
+        original = perform_http_request(locale_token)
+        configuration.storage.write locale_token, original
+        configuration.display_as.call locale_token, original
       end
     end
 
